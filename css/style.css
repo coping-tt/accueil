@@ -1062,6 +1062,77 @@ main {
   color: var(--color-night);
 }
 
+/* --- Figure annotée (équipement) : textbox + trait de rappel, façon PowerPoint --- */
+.annotated-figure {
+  position: relative;
+  width: min(420px, 100%);
+  margin: 0 auto 3rem;
+}
+
+.annotated-figure img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--color-border);
+}
+
+.annotated-figure figcaption {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+}
+
+/* Chaque annotation est ancrée sur un point (--x, --y) de l'image */
+.annotation {
+  position: absolute;
+  top: var(--y);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.annotation-left {
+  right: calc(100% - var(--x));
+}
+
+.annotation-right {
+  left: var(--x);
+}
+
+.annotation-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  border: 2px solid #ffffff;
+  flex-shrink: 0;
+}
+
+.annotation-line {
+  width: 3rem;
+  height: 2px;
+  background: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+.annotation-label {
+  background: var(--color-bg-alt);
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-primary);
+  width: max-content;
+  max-width: 170px;
+  box-shadow: 4px 4px 0 var(--color-rose-pale);
+}
+
+.annotation-left .annotation-label {
+  text-align: right;
+}
+
 /* --- Map embed --- */
 .map-container {
   width: 100%;
@@ -1221,6 +1292,11 @@ main {
 
   .section {
     padding: 3rem 1.5rem;
+  }
+
+  /* Plus de place pour les textbox : l'image reste, la liste au-dessus fait foi */
+  .annotation {
+    display: none;
   }
 
   /* La matrice s'empile : catégorie en intertitre, étiquettes dans les cartes */
