@@ -715,64 +715,255 @@ main {
   margin-top: 0.5rem;
 }
 
-/* --- Gallery --- */
-.gallery-grid {
+/* --- Galerie : grille d'albums --- */
+.album-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
   max-width: var(--max-width);
   margin: 0 auto;
 }
 
-.gallery-item {
-  border-radius: var(--radius);
+.album-card {
+  display: block;
+  background: var(--color-bg-alt);
   border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
   overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  aspect-ratio: 4/3;
-  background: var(--color-border);
+  color: inherit;
+  transition: box-shadow var(--transition), border-color var(--transition);
 }
 
-.gallery-item img {
+.album-card:hover,
+.album-card:focus-visible {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-pop);
+  color: inherit;
+}
+
+.album-cover {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  background: var(--color-border);
+  transition: transform var(--transition);
+}
+
+.album-card:hover .album-cover {
+  transform: scale(1.04);
+}
+
+.album-cover-wrap {
+  overflow: hidden;
+}
+
+.album-cover-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--color-night);
+  color: var(--color-text-inv);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.album-card-body {
+  padding: 1.35rem 1.5rem 1.5rem;
+}
+
+.album-card-body h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.35rem;
+}
+
+.album-card-body p {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+.album-meta {
+  display: inline-block;
+  margin-top: 0.85rem;
+  padding: 0.2rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-rose-pale);
+  color: var(--color-secondary-light);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* --- Page album --- */
+.album-back {
+  display: inline-block;
+  margin-bottom: 2.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.album-event {
+  max-width: var(--max-width);
+  margin: 0 auto 3.5rem;
+}
+
+.album-event:last-child {
+  margin-bottom: 0;
+}
+
+.album-event-header {
+  margin-bottom: 1.5rem;
+}
+
+.album-event-header h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+  margin-bottom: 0.3rem;
+}
+
+.album-event-date {
+  display: block;
+  color: var(--color-secondary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+}
+
+.album-event-header p {
+  color: var(--color-text-light);
+  max-width: 70ch;
+}
+
+/* --- Splash de photos --- */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.9rem;
+}
+
+.photo {
+  display: block;
+  position: relative;
+  aspect-ratio: 4/3;
+  border: 1.5px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-border);
+  cursor: zoom-in;
+}
+
+.photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition);
 }
 
-.gallery-item:hover img {
-  transform: scale(1.05);
+.photo:hover img,
+.photo:focus-visible img {
+  transform: scale(1.06);
 }
 
-.gallery-caption {
+.album-empty {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--color-text-light);
+}
+
+/* --- Lightbox --- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(19, 30, 66, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 4.5rem 1.5rem 5rem;
+}
+
+.lightbox.is-open {
+  display: flex;
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+.lightbox img {
+  max-width: min(1200px, 92vw);
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.lightbox-caption {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(19, 30, 66, 0.85));
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  max-width: 90vw;
+  text-align: center;
+  color: var(--color-rose);
+  font-size: 0.95rem;
+}
+
+.lightbox-btn {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   color: var(--color-text-inv);
-  padding: 2rem 1rem 1rem;
-  font-size: 0.9rem;
-  transform: translateY(100%);
-  transition: transform var(--transition);
-}
-
-.gallery-item:hover .gallery-caption {
-  transform: translateY(0);
-}
-
-.gallery-placeholder {
-  width: 100%;
-  height: 100%;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-night);
-  color: var(--color-text-inv);
-  font-size: 1rem;
-  text-align: center;
-  padding: 1rem;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.lightbox-btn:hover {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.lightbox-close {
+  top: 1.25rem;
+  right: 1.25rem;
+}
+
+.lightbox-prev {
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-next {
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-btn[hidden] {
+  display: none;
 }
 
 /* --- Info Boxes (infos pratiques) --- */
@@ -1342,8 +1533,17 @@ main {
     padding: 0 1.25rem 1.25rem;
   }
 
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  .photo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .lightbox {
+    padding: 4rem 0.75rem 4.5rem;
+  }
+
+  .lightbox-btn {
+    width: 42px;
+    height: 42px;
   }
 }
 
