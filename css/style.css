@@ -23,7 +23,10 @@
   --color-text-inv: #ffffff;
   --color-border: #dcdff0;
 
-  --shadow-pop: 8px 8px 0 var(--color-rose-pale); /* ombre dure signature */
+  /* Ombre dure signature. Reservee aux elements reellement cliquables
+     (.album-card, .btn, .photo) : sur un bloc statique elle promet une
+     action qui n'existe pas. */
+  --shadow-pop: 8px 8px 0 var(--color-rose-pale);
   --radius: 16px;
   --radius-pill: 999px;
   --max-width: 1200px;
@@ -454,12 +457,6 @@ main {
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: box-shadow var(--transition), border-color var(--transition);
-}
-
-.card:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-pop);
 }
 
 .card-img {
@@ -512,12 +509,6 @@ main {
   background: var(--color-bg-alt);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius);
-  transition: box-shadow var(--transition), border-color var(--transition);
-}
-
-.highlight-item:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-pop);
 }
 
 .highlight-icon {
@@ -559,12 +550,6 @@ main {
   background: var(--color-bg-alt);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius);
-  transition: box-shadow var(--transition), border-color var(--transition);
-}
-
-.team-member:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-pop);
 }
 
 .team-photo {
@@ -627,12 +612,6 @@ main {
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: box-shadow var(--transition), border-color var(--transition);
-}
-
-.event-item:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-pop);
 }
 
 .event-date {
@@ -980,12 +959,6 @@ body.lightbox-open {
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius);
   padding: 2rem;
-  transition: box-shadow var(--transition), border-color var(--transition);
-}
-
-.info-box:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-pop);
 }
 
 .info-box h3 {
@@ -1110,11 +1083,6 @@ body.lightbox-open {
   justify-content: center;
 }
 
-.schedule-empty:hover {
-  border-color: var(--color-border);
-  box-shadow: none;
-}
-
 .schedule-empty p {
   color: var(--color-text-light);
   font-size: 0.9rem;
@@ -1139,7 +1107,6 @@ body.lightbox-open {
   text-align: center;
   display: flex;
   flex-direction: column;
-  transition: box-shadow var(--transition), border-color var(--transition);
 }
 
 .pricing-card .btn {
@@ -1147,19 +1114,10 @@ body.lightbox-open {
   align-self: center;
 }
 
-.pricing-card:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-pop);
-}
-
 .pricing-card.featured {
   background: var(--color-night);
   border-color: var(--color-night);
   position: relative;
-}
-
-.pricing-card.featured:hover {
-  box-shadow: 8px 8px 0 var(--color-rose);
 }
 
 .pricing-card.featured::before {

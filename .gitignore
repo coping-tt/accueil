@@ -1,0 +1,9 @@
+# Artefacts Windows/WSL créés à chaque copie de fichier
+*:Zone.Identifier
+
+# Systèmes
+.DS_Store
+Thumbs.db
+
+# Originaux pleine resolution conserves hors du site
+/archive/
