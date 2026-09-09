@@ -33,8 +33,22 @@ cliquable se trouve dans `pages/galerie.html`.
    ```bash
    cd gallery/2026-2027/jeunesse/stage-rentree
    mkdir -p thumb
-   mogrify -path thumb -resize 600x600^ -quality 82 -strip *.jpg
+   mogrify -path thumb -resize 600x -quality 82 -strip *.jpg
    ```
+
+   Les cases de la galerie (couverture d'album et grille de photos) sont en
+   **4/3 paysage** : une vignette d'un autre format y est recadrée au centre par
+   le CSS. Pour une photo verticale, le centre tombe souvent à côté du sujet —
+   mieux vaut recadrer soi-même en 4/3 sur le sujet, l'image grande taille
+   gardant son cadrage d'origine :
+
+   ```bash
+   # 4/3 pris dans une photo 1200x1600, 30 px sous le bord haut
+   convert ../../../archive/Saison-2026-2027/boubou.jpg \
+     -crop 1200x900+0+30 +repage -resize 600x -quality 82 -strip thumb/boubou.jpg
+   ```
+
+   Attention : un `mogrify` relancé sur tout le dossier écrase ces recadrages.
 
 3. Réduire les originaux s'ils dépassent ~1600 px de large :
 
