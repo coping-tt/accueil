@@ -42,71 +42,33 @@
 
   <main>
 
-    <!-- ========== EVENEMENTS ========== -->
+    <!-- ========== CALENDRIER ==========
+         Rempli par js/calendrier.js a partir des fichiers data/*.js.
+         Pour ajouter un evenement : voir data/README.md. -->
     <section class="section">
       <div class="container">
-        <!-- <div class="section-title">
-          <h2>&Eacute;v&eacute;nements</h2>
-          <p>Moments de convivialit&eacute; et vie du club</p>
-        </div>
-	-->
-        <div class="events-list">
-
-          <div class="event-item">
-            <div class="event-date">
-              <span class="day">05</span>
-              <span class="month">Sept</span>
-            </div>
-            <div class="event-details">
-              <span class="event-tag tag-evenement">&Eacute;v&eacute;nement</span>
-              <h3>Forum des associations</h3>
-              <p>Retrouvez-nous au forum des associations de La Chapelle-en-Serval. D&eacute;monstrations et inscriptions sur place !</p>
-              <p class="event-meta">Salle des f&ecirc;tes &mdash; 10h00 - 17h00</p>
+        <div class="cal is-loading" id="calendrier">
+          <div class="cal-toolbar">
+            <h2 class="cal-title" aria-live="polite">Calendrier</h2>
+            <div class="cal-nav">
+              <button type="button" class="cal-btn cal-prev" aria-label="Mois pr&eacute;c&eacute;dent">&#8249;</button>
+              <button type="button" class="cal-btn cal-today">Aujourd'hui</button>
+              <button type="button" class="cal-btn cal-next" aria-label="Mois suivant">&#8250;</button>
             </div>
           </div>
-
-          <div class="event-item">
-            <div class="event-date">
-              <span class="day">15</span>
-              <span class="month">Sept</span>
-            </div>
-            <div class="event-details">
-              <span class="event-tag tag-tournoi">Tournoi</span>
-              <h3>Tournoi départemental de Longueuil Sainte-Marie</h3>
-	      <p></p>
-              <p class="event-meta"></p>
-            </div>
-          </div>
-
-          <div class="event-item">
-            <div class="event-date">
-              <span class="day">19</span>
-              <span class="month">Sept</span>
-            </div>
-            <div class="event-details">
-              <span class="event-tag tag-competition">Championnat</span>
-              <h3>Journ&eacute;e 1 &mdash; Phase 1</h3>
-              <p>Premi&egrave;re rencontre de championnat d&eacute;partemental, équipes 3-5.</p>
-              <p class="event-meta"></p>
-            </div>
-          </div>
-
-          <div class="event-item">
-            <div class="event-date">
-              <span class="day">20</span>
-              <span class="month">Sept</span>
-            </div>
-            <div class="event-details">
-              <span class="event-tag tag-competition">Championnat</span>
-              <h3>Journ&eacute;e 1 &mdash; Phase 1</h3>
-              <p>Premi&egrave;re rencontre de championnat d&eacute;partemental, équipes 1-2.</p>
-              <p class="event-meta"></p>
-            </div>
-          </div>
-
+          <div class="cal-filters" role="group" aria-label="Filtrer par type d'&eacute;v&eacute;nement"></div>
+          <div class="cal-grid"></div>
+          <p class="cal-message" hidden></p>
+          <ol class="cal-agenda" aria-label="&Eacute;v&eacute;nements du mois"></ol>
+          <noscript><p class="cal-message">Le calendrier n&eacute;cessite JavaScript.</p></noscript>
         </div>
       </div>
     </section>
+
+    <dialog class="cal-dialog" aria-labelledby="cal-dialog-title">
+      <button type="button" class="cal-dialog-close" aria-label="Fermer">&times;</button>
+      <div class="cal-dialog-body"></div>
+    </dialog>
 
   </main>
 
@@ -152,6 +114,14 @@
       <p>&copy; 2026 CoPing &mdash; La Chapelle-Orry Ping. Tous droits r&eacute;serv&eacute;s.</p>
     </div>
   </footer>
+
+  <script src="../data/evenements.js"></script>
+  <script src="../data/championnat-2026-2027-phase1.js"></script>
+  <script src="../data/championnat-jeunes-phase1.js"></script>
+  <script src="../data/criterium-federal.js"></script>
+  <script src="../data/championnat-500pts.js"></script>
+  <script src="../data/clubs.js"></script>
+  <script src="../js/calendrier.js"></script>
 
 </body>
 </html>

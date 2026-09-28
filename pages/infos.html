@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -123,42 +124,48 @@
     </section>
 
     <!-- ========== LIEU & ACCES ========== -->
-    <section class="section">
+    <section class="section" id="lieux">
       <div class="container">
         <div class="section-title">
-          <h2>Lieu &amp; Acc&egrave;s</h2>
+          <h2>Lieux &amp; Acc&egrave;s</h2>
           <p>Comment nous trouver</p>
         </div>
         <div class="info-grid">
 
-          <div class="info-box">
-            <h3>Adresse</h3>
+          <div class="info-box venue venue-entrainement">
+            <h3>Entra&icirc;nements</h3>
             <p>
-              <strong>École Henri Delaunay - Orry-la-Ville</strong><br>
+              <strong>&Eacute;cole Henri Delaunay</strong><br>
               7 Rue d'Aumale<br>
               60560 Orry-la-Ville
             </p>
             <p class="mt-2">La salle est &eacute;quip&eacute;e de 6 tables de comp&eacute;tition.</p>
           </div>
 
+          <div class="info-box venue venue-competition">
+            <h3>Comp&eacute;titions</h3>
+            <p>
+              <strong>Salle polyvalente</strong><br>
+              Rue des Fraisiers<br>
+              60560 Orry-la-Ville
+            </p>
+            <p class="mt-2">Les rencontres de championnat &agrave; domicile se jouent ici.</p>
+          </div>
+
           <div class="info-box">
             <h3>Acc&egrave;s</h3>
             <ul>
-              <li><strong>En voiture :</strong> Parking gratuit place de la libération</li>
+              <li><strong>En voiture :</strong> Parking gratuit place de la lib&eacute;ration</li>
               <li><strong>En train :</strong> Gare la Borne Blanche (RER D), puis 12 min &agrave; pied</li>
-              <li><strong>En bus :</strong> Ligne 643, arr&ecirc;t libération</li>
+              <li><strong>En bus :</strong> Ligne 643, arr&ecirc;t lib&eacute;ration</li>
             </ul>
           </div>
 
         </div>
 
-        <!-- Carte -->
-        <div class="map-container">
-          <iframe
-            width="425" height="350"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=2.5114596420645134%2C49.13014827919769%2C2.516191058766784%2C49.132398246728926&amp;layer=mapnik&amp;marker=49.13125397022993%2C2.5146242332907605"
-           >
-          </iframe>
+        <!-- Carte : remplie par js/carte.js (Leaflet). Sans JS, lien vers OpenStreetMap. -->
+        <div class="map-container" id="carte-lieux" aria-label="Carte des lieux du club">
+          <a class="map-fallback" href="https://www.openstreetmap.org/?mlat=49.13125&amp;mlon=2.51462#map=17/49.1308/2.5132" target="_blank" rel="noopener">Voir les lieux sur OpenStreetMap</a>
         </div>
       </div>
     </section>
@@ -287,6 +294,9 @@
       <p>&copy; 2026 CoPing &mdash; La Chapelle-Orry Ping. Tous droits r&eacute;serv&eacute;s.</p>
     </div>
   </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="../js/carte.js"></script>
 
 </body>
 </html>
