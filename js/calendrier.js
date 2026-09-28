@@ -89,6 +89,21 @@
       }
     },
     {
+      cle: 'groupe-detection',
+      ligne: function (r) {
+        return {
+          date: r.date, type: 'stage',
+          titre: 'Groupe détection du comité', court: 'Groupe détection',
+          horaire: r.horaire || '14h00 - 16h30 (rendez-vous 13h45)',
+          description: 'Séance mensuelle du comité de l’Oise pour les jeunes sélectionnés.',
+          details: [['Public', 'Poussins et benjamins, sur sélection']],
+          lieu: 'Gymnase des Coteaux — 11 allée Georges Bizet, 60180 Nogent-sur-Oise',
+          lien: itineraire('Gymnase des Coteaux, 11 allée Georges Bizet, 60180 Nogent-sur-Oise'),
+          lienTexte: 'Itinéraire'
+        };
+      }
+    },
+    {
       cle: 'championnat-500pts',
       ligne: function (r) {
         return {
