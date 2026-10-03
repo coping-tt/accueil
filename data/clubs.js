@@ -13,10 +13,10 @@ var COPING_CLUBS = {
   '07600027': { nom: 'Crépy-en-Valois US', salle: 'Salle Bernard Kindraich', adresse: 'Rue Hector Berlioz, 60800 Crépy-en-Valois' },
   '07600017': { nom: 'Goincourt TT', salle: 'Salle polyvalente', adresse: 'Rue Jean Jaurès, place Albert Cassarin-Grand, 60000 Goincourt' },
   '07600166': { nom: 'Hénonville CO', salle: 'Complexe sportif', adresse: 'Route de Villeneuve, 60119 Hénonville' },
-  '07600008': { nom: 'Les Ageux FR', salle: 'Salle Jean Le Vourch', adresse: 'Rue Louis Drouart, 60700 Les Ageux' },
+  '07600008': { nom: 'Les Ageux FR', salle: 'Salle Jean Le Vourch', adresse: '18 Rue Louis Drouart, 60700 Les Ageux' },
   '07600088': { nom: 'Longueil TT', salle: 'Salle multifonctions du complexe sportif', adresse: '13 bis rue de la Gare, 60126 Longueil-Sainte-Marie' },
   '07600117': { nom: 'Noyon TT', salle: 'Gymnase Jean Bouin (près de la piscine)', adresse: 'Avenue Jean Bouin, 60400 Noyon' },
   '07600004': { nom: 'Pays Compiégnois TT', salle: 'Complexe Ferdinand Bac, salle Albert Magnier', adresse: 'Rue Othenin, 60200 Compiègne' },
   '07600046': { nom: 'E. St Max-St Leu', salle: 'Salle P. Grousset', adresse: 'Avenue de la Commune de Paris, 60340 Saint-Leu-d’Esserent' },
-  '07020031': { nom: 'Venizel TT', salle: 'Salle de tennis de table', adresse: 'Rue de l’Oiselet, 02200 Venizel' }
+  '07020031': { nom: 'Venizel TT', salle: 'Salle TT Vénizel', adresse: 'Impasse Jean Durand, 02200 Venizel' }
 };
