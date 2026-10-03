@@ -57,9 +57,11 @@ résultats…), ajouter `lien: 'https://…'` sur cette ligne.
 `clubs.js` associe chaque numéro FFTT de club à sa salle. Dans le championnat par équipes,
 chaque match à l'extérieur porte le numéro du club adverse (`club: '07600039'`) : la fiche
 affiche alors la salle et un bouton « Itinéraire ». Les numéros figurent dans les PDF des
-poules, entre parenthèses après le nom de l'équipe ; la salle se trouve sur la fiche du club
-(par exemple <https://winpongmag.com/tennis-de-table>, qui reprend la salle déclarée à la FFTT).
-Un club manquant dans `clubs.js` est signalé dans la console.
+poules, entre parenthèses après le nom de l'équipe. Pour la salle, recouper plusieurs sources :
+la salle déclarée à la FFTT (reprise par <https://winpongmag.com/tennis-de-table>, parfois
+périmée), l'annuaire <https://www.tennis-de-table.com/annuaire/> et surtout le site du club ou
+de la mairie, qui l'emporte en cas de désaccord. Un club manquant dans `clubs.js` est signalé
+dans la console.
 
 ## Ajouter un nouveau fichier de compétitions
 

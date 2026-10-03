@@ -85,7 +85,7 @@
             ['Journée', r.journee + ' — phase 1']
           ],
           lieu: dom ? SALLE.nom + ' — ' + SALLE.adresse : club ? club.salle + ' — ' + club.adresse : '',
-          itineraire: dom ? SALLE.nom + ', ' + SALLE.adresse : club ? club.adresse : '',
+          itineraire: dom ? SALLE.nom + ', ' + SALLE.adresse : club ? club.salle + ', ' + club.adresse : '',
           lien: r.lien || (/^Régionale/.test(r.division) ? PAGES.equipesRegion : PAGES.equipesOise),
           lienTexte: 'Page du championnat'
         };
