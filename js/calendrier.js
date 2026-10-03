@@ -97,7 +97,7 @@
           precision: r.echelon ? r.echelon.toLowerCase() : '',
           horaire: r.horaire, description: r.description, details: details,
           lieu: r.salle ? r.salle + ' — ' + r.adresse : r.lieu,
-          itineraire: r.adresse
+          itineraire: r.adresse ? r.salle + ', ' + r.adresse : ''
         };
       }
     },
