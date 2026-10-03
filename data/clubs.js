@@ -5,7 +5,7 @@
    en cas de désaccord, la source la plus officielle l'emporte (club, mairie).
    Numéros FFTT : PDF des poules du comité de l'Oise. */
 var COPING_CLUBS = {
-  '07600112': { nom: 'Agnetz ASTT', salle: 'Gymnase du Parc', adresse: 'Rue Gaston Paucellier, 60600 Agnetz' },
+  '07600112': { nom: 'Agnetz ASTT', salle: 'Gymnase du Parc', adresse: 'Rue Marcel Thomas, 60600 Agnetz' },
   '07600005': { nom: 'Angy-Bury TT', salle: 'Salle multifonctions', adresse: 'Place Henri Barbusse, 60250 Angy' },
   '07600126': { nom: 'Brenouille ATT', salle: 'Salle des associations', adresse: '16 rue Robert Guerlin, 60870 Brenouille' },
   '07600171': { nom: 'Cauffry TT', salle: 'Espace Loisirs et Culture', adresse: '15 rue des Marronniers, 60290 Cauffry' },
