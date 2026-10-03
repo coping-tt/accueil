@@ -39,6 +39,13 @@ Exemple :
     description: 'Tournoi interne, ouvert à tous les adhérents.', lieu: 'Salle du club' }
 ```
 
+## Horaires des rencontres par équipes
+
+L'heure est déduite de la division (`heureRencontre` dans `js/calendrier.js`) : Régionale 4
+le dimanche 14h30, D1-D2 le dimanche 9h00, D3-D4 le samedi 19h00, sauf nos équipes qui
+reçoivent à 18h00. Pour une rencontre décalée ou un adversaire qui reçoit à une autre heure
+(mention « reçoit à … » dans les PDF des poules), ajouter `horaire: '17h00'` sur la ligne.
+
 ## Salles des clubs adverses
 
 `clubs.js` associe chaque numéro FFTT de club à sa salle. Dans le championnat par équipes,

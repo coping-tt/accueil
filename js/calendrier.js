@@ -18,6 +18,17 @@
   var SALLE = 'Salle polyvalente, rue des Fraisiers — Orry-la-Ville';
   var PLAN = 'infos.html#lieux';
 
+  // Heure des rencontres par equipes, sauf `horaire` precise sur la ligne :
+  // Regionale 4 (Oise) le dimanche 14h30 ; D1-D2 le dimanche 9h00 ; D3-D4 le samedi 19h00,
+  // sauf nos equipes qui recoivent a 18h00 (reglements Ligue HDF et comite de l'Oise).
+  function heureRencontre(r, dom) {
+    if (r.horaire) return r.horaire;
+    if (/^Régionale/.test(r.division)) return '14h30';
+    if (/^D[12] /.test(r.division)) return '9h00';
+    if (/^D[34] /.test(r.division)) return dom ? '18h00' : '19h00';
+    return '';
+  }
+
   // Types d'evenements, dans l'ordre des filtres. Couleurs : .tag-<type> dans style.css.
   var TYPES = {
     equipes: 'Championnat par équipes',
@@ -48,7 +59,7 @@
         var club = dom ? null : CLUBS[r.club];
         if (!dom && !club) console.warn('Calendrier : salle inconnue pour ' + r.adversaire + ' (club « ' + r.club + ' », voir data/clubs.js)');
         return {
-          date: r.date, type: 'equipes',
+          date: r.date, type: 'equipes', horaire: heureRencontre(r, dom),
           titre: r.equipe + ' contre ' + r.adversaire,
           court: r.equipe + (dom ? ' · dom.' : ' · ext.'),
           precision: dom ? 'domicile' : 'extérieur',
@@ -67,7 +78,7 @@
       cle: 'championnat-jeunes-phase1',
       ligne: function (r) {
         return {
-          date: r.date, type: 'jeunes',
+          date: r.date, type: 'jeunes', horaire: r.horaire || '10h00 - 13h00',
           titre: 'Championnat jeunes — journée ' + r.journee,
           court: 'Jeunes · ' + r.equipe,
           details: [['Équipe', r.equipe], ['Journée', r.journee + ' — phase 1']]
@@ -110,7 +121,7 @@
       ligne: function (r) {
         return {
           date: r.date, type: 'individuel',
-          titre: 'Compétition des 500 points', court: '500 points',
+          titre: 'Compétition des 500 points', court: '500 points', horaire: r.horaire,
           details: r.tableaux ? [['Tableaux', r.tableaux]] : [],
           lieu: r.salle ? r.salle + ' — ' + r.adresse : r.lieu,
           itineraire: r.adresse ? r.salle + ', ' + r.adresse : ''
