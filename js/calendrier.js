@@ -18,6 +18,22 @@
   // Salle des competitions a domicile (les entrainements sont a l'ecole Henri Delaunay)
   var SALLE = { nom: 'Salle polyvalente', adresse: 'Rue des Fraisiers, 60560 Orry-la-Ville' };
 
+  // Pages officielles des competitions (bouton de la fiche ; un champ `lien` sur la ligne prime)
+  var PAGES = {
+    equipesOise: 'https://comiteoisett.fr/index.php/championnat-par-equipes/',
+    equipesRegion: 'https://liguehdftt.fr/championnat-par-equipes-1ere-phase-saison-2026-2027/',
+    jeunes: 'https://comiteoisett.fr/index.php/championnat-jeunes/',
+    criteriumOise: 'https://comiteoisett.fr/index.php/criterium-federal/',
+    criteriumRegion: {
+      1: 'https://liguehdftt.fr/1er-tour-criterium-federal-regional-samedi-10-octobre-2026/',
+      2: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t2/',
+      3: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t3/',
+      4: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t4/'
+    },
+    points500: 'https://comiteoisett.fr/index.php/les-500-points/',
+    detection: 'https://comiteoisett.fr/index.php/groupe-detection-oise/'
+  };
+
   // Heure des rencontres par equipes, sauf `horaire` precise sur la ligne :
   // Regionale 4 (Oise) le dimanche 14h30 ; D1-D2 le dimanche 9h00 ; D3-D4 le samedi 19h00,
   // sauf nos equipes qui recoivent a 18h00 (reglements Ligue HDF et comite de l'Oise).
@@ -69,7 +85,9 @@
             ['Journée', r.journee + ' — phase 1']
           ],
           lieu: dom ? SALLE.nom + ' — ' + SALLE.adresse : club ? club.salle + ' — ' + club.adresse : '',
-          itineraire: dom ? SALLE.nom + ', ' + SALLE.adresse : club ? club.adresse : ''
+          itineraire: dom ? SALLE.nom + ', ' + SALLE.adresse : club ? club.adresse : '',
+          lien: r.lien || (/^Régionale/.test(r.division) ? PAGES.equipesRegion : PAGES.equipesOise),
+          lienTexte: 'Page du championnat'
         };
       }
     },
@@ -80,7 +98,8 @@
           date: r.date, type: 'jeunes', horaire: r.horaire || '10h00 - 13h00',
           titre: 'Championnat jeunes — journée ' + r.journee,
           court: 'Jeunes · ' + r.equipe,
-          details: [['Équipe', r.equipe], ['Journée', r.journee + ' — phase 1']]
+          details: [['Équipe', r.equipe], ['Journée', r.journee + ' — phase 1']],
+          lien: r.lien || PAGES.jeunes, lienTexte: 'Page du championnat'
         };
       }
     },
@@ -97,7 +116,9 @@
           precision: r.echelon ? r.echelon.toLowerCase() : '',
           horaire: r.horaire, description: r.description, details: details,
           lieu: r.salle ? r.salle + ' — ' + r.adresse : r.lieu,
-          itineraire: r.adresse ? r.salle + ', ' + r.adresse : ''
+          itineraire: r.adresse ? r.salle + ', ' + r.adresse : '',
+          lien: r.lien || (r.echelon === 'Régional' ? PAGES.criteriumRegion[r.phase] : PAGES.criteriumOise),
+          lienTexte: 'Page du critérium'
         };
       }
     },
@@ -111,7 +132,8 @@
           description: 'Séance mensuelle du comité de l’Oise pour les jeunes sélectionnés.',
           details: [['Public', 'Poussins et benjamins, sur sélection']],
           lieu: 'Gymnase des Coteaux — 11 allée Georges Bizet, 60180 Nogent-sur-Oise',
-          itineraire: 'Gymnase des Coteaux, 11 allée Georges Bizet, 60180 Nogent-sur-Oise'
+          itineraire: 'Gymnase des Coteaux, 11 allée Georges Bizet, 60180 Nogent-sur-Oise',
+          lien: PAGES.detection, lienTexte: 'Page du groupe'
         };
       }
     },
@@ -123,7 +145,8 @@
           titre: 'Compétition des 500 points', court: '500 points', horaire: r.horaire,
           details: r.tableaux ? [['Tableaux', r.tableaux]] : [],
           lieu: r.salle ? r.salle + ' — ' + r.adresse : r.lieu,
-          itineraire: r.adresse ? r.salle + ', ' + r.adresse : ''
+          itineraire: r.adresse ? r.salle + ', ' + r.adresse : '',
+          lien: r.lien || PAGES.points500, lienTexte: 'Page de la compétition'
         };
       }
     }
