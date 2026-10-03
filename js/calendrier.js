@@ -33,8 +33,11 @@
       cle: 'evenements',
       ligne: function (r) {
         return {
-          date: r.date, fin: r.fin, type: r.type, titre: r.titre, court: r.titre,
-          horaire: r.horaire, description: r.description, lieu: r.lieu, lien: r.lien
+          date: r.date, fin: r.fin, type: r.type, titre: r.titre, court: r.court || r.titre,
+          horaire: r.horaire, description: r.description,
+          lieu: r.adresse ? (r.lieu ? r.lieu + ' — ' : '') + r.adresse : r.lieu,
+          itineraire: r.adresse ? (r.lieu ? r.lieu + ', ' : '') + r.adresse : '',
+          lien: r.lien, lienTexte: r.lienTexte
         };
       }
     },
@@ -55,8 +58,8 @@
             ['Journée', r.journee + ' — phase 1']
           ],
           lieu: dom ? SALLE : club ? club.salle + ' — ' + club.adresse : '',
-          lien: dom ? PLAN : club ? itineraire(club.adresse) : '',
-          lienTexte: dom ? 'Voir sur la carte' : 'Itinéraire'
+          itineraire: club ? club.adresse : '',
+          lien: dom ? PLAN : '', lienTexte: 'Voir sur la carte'
         };
       }
     },
@@ -84,7 +87,7 @@
           precision: r.echelon ? r.echelon.toLowerCase() : '',
           horaire: r.horaire, description: r.description, details: details,
           lieu: r.salle ? r.salle + ' — ' + r.adresse : r.lieu,
-          lien: r.adresse ? itineraire(r.adresse) : '', lienTexte: 'Itinéraire'
+          itineraire: r.adresse
         };
       }
     },
@@ -98,8 +101,7 @@
           description: 'Séance mensuelle du comité de l’Oise pour les jeunes sélectionnés.',
           details: [['Public', 'Poussins et benjamins, sur sélection']],
           lieu: 'Gymnase des Coteaux — 11 allée Georges Bizet, 60180 Nogent-sur-Oise',
-          lien: itineraire('Gymnase des Coteaux, 11 allée Georges Bizet, 60180 Nogent-sur-Oise'),
-          lienTexte: 'Itinéraire'
+          itineraire: 'Gymnase des Coteaux, 11 allée Georges Bizet, 60180 Nogent-sur-Oise'
         };
       }
     },
@@ -111,13 +113,13 @@
           titre: 'Compétition des 500 points', court: '500 points',
           details: r.tableaux ? [['Tableaux', r.tableaux]] : [],
           lieu: r.salle ? r.salle + ' — ' + r.adresse : r.lieu,
-          lien: r.adresse ? itineraire(r.salle + ', ' + r.adresse) : '', lienTexte: 'Itinéraire'
+          itineraire: r.adresse ? r.salle + ', ' + r.adresse : ''
         };
       }
     }
   ];
 
-  function itineraire(adresse) {
+  function urlItineraire(adresse) {
     return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(adresse);
   }
 
@@ -308,6 +310,13 @@
   // --- Fiche detaillee ---
   var retourFocus = null;
 
+  function lien(texte, href, style) {
+    var a = el('a', 'btn ' + style, texte);
+    a.href = href;
+    if (/^https?:/.test(href)) { a.target = '_blank'; a.rel = 'noopener'; }
+    return a;
+  }
+
   function ouvrir(e, origine) {
     retourFocus = origine;
     var corps = dialog.querySelector('.cal-dialog-body');
@@ -333,12 +342,12 @@
       });
       corps.appendChild(dl);
     }
-    if (e.lien) {
-      var a = el('a', 'btn btn-primary', e.lienTexte || 'En savoir plus');
-      a.href = e.lien;
-      if (/^https?:/.test(e.lien)) { a.target = '_blank'; a.rel = 'noopener'; }
-      corps.appendChild(a);
-    }
+    // Boutons : itineraire d'abord (adresse -> Google Maps), puis le lien vers l'evenement
+    var actions = el('div', 'cal-dialog-actions');
+    if (e.itineraire) actions.appendChild(lien('Itinéraire', urlItineraire(e.itineraire), 'btn-primary'));
+    if (e.lien) actions.appendChild(lien(e.lienTexte || 'En savoir plus', e.lien,
+      actions.children.length ? 'btn-outline-dark' : 'btn-primary'));
+    if (actions.children.length) corps.appendChild(actions);
     dialog.showModal();
   }
 
