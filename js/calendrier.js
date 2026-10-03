@@ -15,8 +15,35 @@
 
   var DONNEES = window.COPING_CALENDRIER || {};
   var CLUBS = window.COPING_CLUBS || {}; // salles des adversaires, data/clubs.js
-  var SALLE = 'Salle polyvalente, rue des Fraisiers — Orry-la-Ville';
-  var PLAN = 'infos.html#lieux';
+  // Salle des competitions a domicile (les entrainements sont a l'ecole Henri Delaunay)
+  var SALLE = { nom: 'Salle polyvalente', adresse: 'Rue des Fraisiers, 60560 Orry-la-Ville' };
+
+  // Pages officielles des competitions (bouton de la fiche ; un champ `lien` sur la ligne prime)
+  var PAGES = {
+    equipesOise: 'https://comiteoisett.fr/index.php/championnat-par-equipes/',
+    equipesRegion: 'https://liguehdftt.fr/championnat-par-equipes-1ere-phase-saison-2026-2027/',
+    jeunes: 'https://comiteoisett.fr/index.php/championnat-jeunes/',
+    criteriumOise: 'https://comiteoisett.fr/index.php/criterium-federal/',
+    criteriumRegion: {
+      1: 'https://liguehdftt.fr/1er-tour-criterium-federal-regional-samedi-10-octobre-2026/',
+      2: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t2/',
+      3: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t3/',
+      4: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t4/'
+    },
+    points500: 'https://comiteoisett.fr/index.php/les-500-points/',
+    detection: 'https://comiteoisett.fr/index.php/groupe-detection-oise/'
+  };
+
+  // Heure des rencontres par equipes, sauf `horaire` precise sur la ligne :
+  // Regionale 4 (Oise) le dimanche 14h30 ; D1-D2 le dimanche 9h00 ; D3-D4 le samedi 19h00,
+  // sauf nos equipes qui recoivent a 18h00 (reglements Ligue HDF et comite de l'Oise).
+  function heureRencontre(r, dom) {
+    if (r.horaire) return r.horaire;
+    if (/^Régionale/.test(r.division)) return '14h30';
+    if (/^D[12] /.test(r.division)) return '9h00';
+    if (/^D[34] /.test(r.division)) return dom ? '18h00' : '19h00';
+    return '';
+  }
 
   // Types d'evenements, dans l'ordre des filtres. Couleurs : .tag-<type> dans style.css.
   var TYPES = {
@@ -33,8 +60,11 @@
       cle: 'evenements',
       ligne: function (r) {
         return {
-          date: r.date, fin: r.fin, type: r.type, titre: r.titre, court: r.titre,
-          horaire: r.horaire, description: r.description, lieu: r.lieu, lien: r.lien
+          date: r.date, fin: r.fin, type: r.type, titre: r.titre, court: r.court || r.titre,
+          horaire: r.horaire, description: r.description,
+          lieu: r.adresse ? (r.lieu ? r.lieu + ' — ' : '') + r.adresse : r.lieu,
+          itineraire: r.adresse ? (r.lieu ? r.lieu + ', ' : '') + r.adresse : '',
+          lien: r.lien, lienTexte: r.lienTexte
         };
       }
     },
@@ -45,7 +75,7 @@
         var club = dom ? null : CLUBS[r.club];
         if (!dom && !club) console.warn('Calendrier : salle inconnue pour ' + r.adversaire + ' (club « ' + r.club + ' », voir data/clubs.js)');
         return {
-          date: r.date, type: 'equipes',
+          date: r.date, type: 'equipes', horaire: heureRencontre(r, dom),
           titre: r.equipe + ' contre ' + r.adversaire,
           court: r.equipe + (dom ? ' · dom.' : ' · ext.'),
           precision: dom ? 'domicile' : 'extérieur',
@@ -54,9 +84,10 @@
             ['Division', r.division + ', poule ' + r.poule],
             ['Journée', r.journee + ' — phase 1']
           ],
-          lieu: dom ? SALLE : club ? club.salle + ' — ' + club.adresse : '',
-          lien: dom ? PLAN : club ? itineraire(club.adresse) : '',
-          lienTexte: dom ? 'Voir sur la carte' : 'Itinéraire'
+          lieu: dom ? SALLE.nom + ' — ' + SALLE.adresse : club ? club.salle + ' — ' + club.adresse : '',
+          itineraire: dom ? SALLE.nom + ', ' + SALLE.adresse : club ? club.adresse : '',
+          lien: r.lien || (/^Régionale/.test(r.division) ? PAGES.equipesRegion : PAGES.equipesOise),
+          lienTexte: 'Page du championnat'
         };
       }
     },
@@ -64,10 +95,11 @@
       cle: 'championnat-jeunes-phase1',
       ligne: function (r) {
         return {
-          date: r.date, type: 'jeunes',
+          date: r.date, type: 'jeunes', horaire: r.horaire || '10h00 - 13h00',
           titre: 'Championnat jeunes — journée ' + r.journee,
           court: 'Jeunes · ' + r.equipe,
-          details: [['Équipe', r.equipe], ['Journée', r.journee + ' — phase 1']]
+          details: [['Équipe', r.equipe], ['Journée', r.journee + ' — phase 1']],
+          lien: r.lien || PAGES.jeunes, lienTexte: 'Page du championnat'
         };
       }
     },
@@ -84,7 +116,9 @@
           precision: r.echelon ? r.echelon.toLowerCase() : '',
           horaire: r.horaire, description: r.description, details: details,
           lieu: r.salle ? r.salle + ' — ' + r.adresse : r.lieu,
-          lien: r.adresse ? itineraire(r.adresse) : '', lienTexte: 'Itinéraire'
+          itineraire: r.adresse ? r.salle + ', ' + r.adresse : '',
+          lien: r.lien || (r.echelon === 'Régional' ? PAGES.criteriumRegion[r.phase] : PAGES.criteriumOise),
+          lienTexte: 'Page du critérium'
         };
       }
     },
@@ -98,8 +132,8 @@
           description: 'Séance mensuelle du comité de l’Oise pour les jeunes sélectionnés.',
           details: [['Public', 'Poussins et benjamins, sur sélection']],
           lieu: 'Gymnase des Coteaux — 11 allée Georges Bizet, 60180 Nogent-sur-Oise',
-          lien: itineraire('Gymnase des Coteaux, 11 allée Georges Bizet, 60180 Nogent-sur-Oise'),
-          lienTexte: 'Itinéraire'
+          itineraire: 'Gymnase des Coteaux, 11 allée Georges Bizet, 60180 Nogent-sur-Oise',
+          lien: PAGES.detection, lienTexte: 'Page du groupe'
         };
       }
     },
@@ -108,16 +142,17 @@
       ligne: function (r) {
         return {
           date: r.date, type: 'individuel',
-          titre: 'Compétition des 500 points', court: '500 points',
+          titre: 'Compétition des 500 points', court: '500 points', horaire: r.horaire,
           details: r.tableaux ? [['Tableaux', r.tableaux]] : [],
           lieu: r.salle ? r.salle + ' — ' + r.adresse : r.lieu,
-          lien: r.adresse ? itineraire(r.salle + ', ' + r.adresse) : '', lienTexte: 'Itinéraire'
+          itineraire: r.adresse ? r.salle + ', ' + r.adresse : '',
+          lien: r.lien || PAGES.points500, lienTexte: 'Page de la compétition'
         };
       }
     }
   ];
 
-  function itineraire(adresse) {
+  function urlItineraire(adresse) {
     return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(adresse);
   }
 
@@ -308,6 +343,55 @@
   // --- Fiche detaillee ---
   var retourFocus = null;
 
+  // Presse-papiers : API moderne si disponible, sinon execCommand sur un champ
+  // temporaire place DANS la fiche (hors de la fiche modale, rien n'est selectionnable).
+  function copier(texte) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(texte).catch(function () { return copierAncien(texte); });
+    }
+    return copierAncien(texte);
+  }
+
+  function copierAncien(texte) {
+    return new Promise(function (ok, echec) {
+      var champ = el('textarea');
+      champ.value = texte;
+      champ.setAttribute('readonly', '');
+      champ.style.position = 'fixed';
+      champ.style.opacity = '0';
+      dialog.appendChild(champ);
+      champ.select();
+      var reussi = false;
+      try { reussi = document.execCommand('copy'); } catch (err) { /* echec ci-dessous */ }
+      dialog.removeChild(champ);
+      if (reussi) ok(); else echec();
+    });
+  }
+
+  function boutonCopie(adresse) {
+    var b = el('button', 'btn btn-outline-dark', 'Copier l’adresse');
+    b.type = 'button';
+    b.setAttribute('aria-live', 'polite');
+    var minuterie;
+    b.addEventListener('click', function () {
+      copier(adresse).then(function () {
+        b.textContent = 'Adresse copiée ✓';
+      }, function () {
+        b.textContent = 'Copie impossible';
+      });
+      clearTimeout(minuterie);
+      minuterie = setTimeout(function () { b.textContent = 'Copier l’adresse'; }, 2500);
+    });
+    return b;
+  }
+
+  function lien(texte, href, style) {
+    var a = el('a', 'btn ' + style, texte);
+    a.href = href;
+    if (/^https?:/.test(href)) { a.target = '_blank'; a.rel = 'noopener'; }
+    return a;
+  }
+
   function ouvrir(e, origine) {
     retourFocus = origine;
     var corps = dialog.querySelector('.cal-dialog-body');
@@ -333,12 +417,15 @@
       });
       corps.appendChild(dl);
     }
-    if (e.lien) {
-      var a = el('a', 'btn btn-primary', e.lienTexte || 'En savoir plus');
-      a.href = e.lien;
-      if (/^https?:/.test(e.lien)) { a.target = '_blank'; a.rel = 'noopener'; }
-      corps.appendChild(a);
+    // Boutons : itineraire (adresse -> Google Maps) et copie de l'adresse, puis le lien vers l'evenement
+    var actions = el('div', 'cal-dialog-actions');
+    if (e.itineraire) {
+      actions.appendChild(lien('Itinéraire', urlItineraire(e.itineraire), 'btn-primary'));
+      actions.appendChild(boutonCopie(e.itineraire));
     }
+    if (e.lien) actions.appendChild(lien(e.lienTexte || 'En savoir plus', e.lien,
+      actions.children.length ? 'btn-outline-dark' : 'btn-primary'));
+    if (actions.children.length) corps.appendChild(actions);
     dialog.showModal();
   }
 
