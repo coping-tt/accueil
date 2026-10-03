@@ -343,6 +343,48 @@
   // --- Fiche detaillee ---
   var retourFocus = null;
 
+  // Presse-papiers : API moderne si disponible, sinon execCommand sur un champ
+  // temporaire place DANS la fiche (hors de la fiche modale, rien n'est selectionnable).
+  function copier(texte) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(texte).catch(function () { return copierAncien(texte); });
+    }
+    return copierAncien(texte);
+  }
+
+  function copierAncien(texte) {
+    return new Promise(function (ok, echec) {
+      var champ = el('textarea');
+      champ.value = texte;
+      champ.setAttribute('readonly', '');
+      champ.style.position = 'fixed';
+      champ.style.opacity = '0';
+      dialog.appendChild(champ);
+      champ.select();
+      var reussi = false;
+      try { reussi = document.execCommand('copy'); } catch (err) { /* echec ci-dessous */ }
+      dialog.removeChild(champ);
+      if (reussi) ok(); else echec();
+    });
+  }
+
+  function boutonCopie(adresse) {
+    var b = el('button', 'btn btn-outline-dark', 'Copier l’adresse');
+    b.type = 'button';
+    b.setAttribute('aria-live', 'polite');
+    var minuterie;
+    b.addEventListener('click', function () {
+      copier(adresse).then(function () {
+        b.textContent = 'Adresse copiée ✓';
+      }, function () {
+        b.textContent = 'Copie impossible';
+      });
+      clearTimeout(minuterie);
+      minuterie = setTimeout(function () { b.textContent = 'Copier l’adresse'; }, 2500);
+    });
+    return b;
+  }
+
   function lien(texte, href, style) {
     var a = el('a', 'btn ' + style, texte);
     a.href = href;
@@ -375,9 +417,12 @@
       });
       corps.appendChild(dl);
     }
-    // Boutons : itineraire d'abord (adresse -> Google Maps), puis le lien vers l'evenement
+    // Boutons : itineraire (adresse -> Google Maps) et copie de l'adresse, puis le lien vers l'evenement
     var actions = el('div', 'cal-dialog-actions');
-    if (e.itineraire) actions.appendChild(lien('Itinéraire', urlItineraire(e.itineraire), 'btn-primary'));
+    if (e.itineraire) {
+      actions.appendChild(lien('Itinéraire', urlItineraire(e.itineraire), 'btn-primary'));
+      actions.appendChild(boutonCopie(e.itineraire));
+    }
     if (e.lien) actions.appendChild(lien(e.lienTexte || 'En savoir plus', e.lien,
       actions.children.length ? 'btn-outline-dark' : 'btn-primary'));
     if (actions.children.length) corps.appendChild(actions);
