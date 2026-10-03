@@ -1,15 +1,16 @@
 /* Championnat par équipes 2026-2027, phase 1.
-   Source : PDF des poules sur comiteoisett.fr (l'équipe à gauche de « contre » reçoit).
+   Sources : PDF des poules sur comiteoisett.fr (l'équipe à gauche de « contre » reçoit) ;
+   CO PING 1 (Régionale 4, poule 24) : poules régionales de la Ligue (liguehdftt.fr).
    lieu : domicile ou exterieur. À l'extérieur, club = numéro FFTT de l'adversaire (salle dans clubs.js). */
 var COPING_CALENDRIER = window.COPING_CALENDRIER || {};
 COPING_CALENDRIER['championnat-2026-2027-phase1'] = [
-  { equipe: 'CO PING 1', division: 'D1 Oise', poule: '24', journee: '1', date: '2026-09-20', lieu: 'exterieur', adversaire: 'Venizel TT 7', club: '07020031' },
-  { equipe: 'CO PING 1', division: 'D1 Oise', poule: '24', journee: '2', date: '2026-10-04', lieu: 'domicile', adversaire: 'Beauval TT 1' },
-  { equipe: 'CO PING 1', division: 'D1 Oise', poule: '24', journee: '3', date: '2026-10-18', lieu: 'domicile', adversaire: 'Choisy au Bac CTT 1' },
-  { equipe: 'CO PING 1', division: 'D1 Oise', poule: '24', journee: '4', date: '2026-11-08', lieu: 'exterieur', adversaire: 'Brenouille ATT 1', club: '07600126' },
-  { equipe: 'CO PING 1', division: 'D1 Oise', poule: '24', journee: '5', date: '2026-11-22', lieu: 'domicile', adversaire: 'Courmelles Crouy ETT 1' },
-  { equipe: 'CO PING 1', division: 'D1 Oise', poule: '24', journee: '6', date: '2026-12-06', lieu: 'exterieur', adversaire: 'St Max-St Leu TT 1', club: '07600046' },
-  { equipe: 'CO PING 1', division: 'D1 Oise', poule: '24', journee: '7', date: '2026-12-13', lieu: 'domicile', adversaire: 'Beauvais TT 4' },
+  { equipe: 'CO PING 1', division: 'Régionale 4', poule: '24', journee: '1', date: '2026-09-20', lieu: 'exterieur', adversaire: 'Venizel TT 7', club: '07020031' },
+  { equipe: 'CO PING 1', division: 'Régionale 4', poule: '24', journee: '2', date: '2026-10-04', lieu: 'domicile', adversaire: 'Beauval TT 1' },
+  { equipe: 'CO PING 1', division: 'Régionale 4', poule: '24', journee: '3', date: '2026-10-18', lieu: 'domicile', adversaire: 'Choisy au Bac CTT 1' },
+  { equipe: 'CO PING 1', division: 'Régionale 4', poule: '24', journee: '4', date: '2026-11-08', lieu: 'exterieur', adversaire: 'Brenouille ATT 1', club: '07600126' },
+  { equipe: 'CO PING 1', division: 'Régionale 4', poule: '24', journee: '5', date: '2026-11-22', lieu: 'domicile', adversaire: 'Courmelles Crouy ETT 1' },
+  { equipe: 'CO PING 1', division: 'Régionale 4', poule: '24', journee: '6', date: '2026-12-06', lieu: 'exterieur', adversaire: 'St Max-St Leu TT 1', club: '07600046' },
+  { equipe: 'CO PING 1', division: 'Régionale 4', poule: '24', journee: '7', date: '2026-12-13', lieu: 'domicile', adversaire: 'Beauvais TT 4' },
   { equipe: 'CO PING 2', division: 'D1 Oise', poule: '4', journee: '1', date: '2026-09-20', lieu: 'exterieur', adversaire: 'Longueil TT 5', club: '07600088' },
   { equipe: 'CO PING 2', division: 'D1 Oise', poule: '4', journee: '2', date: '2026-10-04', lieu: 'domicile', adversaire: 'Haut Tillois TT 2' },
   { equipe: 'CO PING 2', division: 'D1 Oise', poule: '4', journee: '3', date: '2026-10-18', lieu: 'domicile', adversaire: 'Clermont EP 4' },
