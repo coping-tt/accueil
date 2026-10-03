@@ -15,8 +15,8 @@
 
   var DONNEES = window.COPING_CALENDRIER || {};
   var CLUBS = window.COPING_CLUBS || {}; // salles des adversaires, data/clubs.js
-  var SALLE = 'Salle polyvalente, rue des Fraisiers — Orry-la-Ville';
-  var PLAN = 'infos.html#lieux';
+  // Salle des competitions a domicile (les entrainements sont a l'ecole Henri Delaunay)
+  var SALLE = { nom: 'Salle polyvalente', adresse: 'Rue des Fraisiers, 60560 Orry-la-Ville' };
 
   // Heure des rencontres par equipes, sauf `horaire` precise sur la ligne :
   // Regionale 4 (Oise) le dimanche 14h30 ; D1-D2 le dimanche 9h00 ; D3-D4 le samedi 19h00,
@@ -68,9 +68,8 @@
             ['Division', r.division + ', poule ' + r.poule],
             ['Journée', r.journee + ' — phase 1']
           ],
-          lieu: dom ? SALLE : club ? club.salle + ' — ' + club.adresse : '',
-          itineraire: club ? club.adresse : '',
-          lien: dom ? PLAN : '', lienTexte: 'Voir sur la carte'
+          lieu: dom ? SALLE.nom + ' — ' + SALLE.adresse : club ? club.salle + ' — ' + club.adresse : '',
+          itineraire: dom ? SALLE.nom + ', ' + SALLE.adresse : club ? club.adresse : ''
         };
       }
     },
