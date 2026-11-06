@@ -94,12 +94,23 @@
     {
       cle: 'championnat-jeunes-phase1',
       ligne: function (r) {
+        // Plateau dans une salle designee par le comite : salle/adresse sur la ligne, ou club qui recoit
+        var club = r.club ? CLUBS[r.club] : null;
+        if (r.club && !club) console.warn('Calendrier : salle inconnue pour le club « ' + r.club + ' » (voir data/clubs.js)');
+        var salle = r.salle || (club && club.salle);
+        var adresse = r.adresse || (club && club.adresse);
+        var details = [['Équipe', r.equipe]];
+        if (r.division) details.push(['Division', r.division + (r.poule ? ', poule ' + r.poule : '')]);
+        details.push(['Journée', r.journee + ' — phase 1']);
+        if (r.adversaires) details.push(['Adversaires', r.adversaires]);
         return {
-          date: r.date, type: 'jeunes', horaire: r.horaire || '10h00 - 13h00',
-          titre: 'Championnat jeunes — journée ' + r.journee,
+          date: r.date, type: 'jeunes', horaire: r.horaire || '10h00 - 13h00 (pointage 9h30)',
+          titre: 'Championnat jeunes — ' + r.equipe + ', journée ' + r.journee,
           court: 'Jeunes · ' + r.equipe,
-          details: [['Équipe', r.equipe], ['Journée', r.journee + ' — phase 1']],
-          lien: r.lien || PAGES.jeunes, lienTexte: 'Page du championnat'
+          details: details,
+          lieu: adresse ? (salle ? salle + ' — ' : '') + adresse : '',
+          itineraire: adresse ? (salle ? salle + ', ' : '') + adresse : '',
+          lien: r.lien || PAGES.jeunes, lienTexte: r.lien ? 'Tableau des poules' : 'Page du championnat'
         };
       }
     },
