@@ -26,7 +26,7 @@
     criteriumOise: 'https://comiteoisett.fr/index.php/criterium-federal/',
     criteriumRegion: {
       1: 'https://liguehdftt.fr/1er-tour-criterium-federal-regional-samedi-10-octobre-2026/',
-      2: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t2/',
+      2: 'https://liguehdftt.fr/2eme-tour-criterium-federal-regional-samedi-14-novembre-2026/',
       3: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t3/',
       4: 'https://liguehdftt.fr/category/competitions/criterium-federal/cf-regional/cf-regional-t4/'
     },
